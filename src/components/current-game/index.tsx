@@ -1,4 +1,3 @@
-import { PencilIcon } from "@heroicons/react/24/solid";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import Link from "next/link";
@@ -6,6 +5,7 @@ import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 import { z } from "zod";
 import EditPlayerModal from "../edit-player-modal";
+import EditPointsToWinModal from "../edit-points-to-win-modal";
 
 export const GameTypeSchema = z.object({
 	pointsToWin: z.number(),
@@ -60,15 +60,7 @@ export default function CurrentGame() {
 					<h2 className="text-3xl tracking-wider text-indigo-900 dark:text-indigo-300">
 						Current Score
 					</h2>
-					<div>
-						<span className="text-lg font-semibold">
-							Playing to:
-						</span>
-						<button className="ml-auto flex items-center gap-2 text-indigo-800 hover:text-indigo-900 active:scale-95 dark:text-indigo-400 dark:hover:text-indigo-300">
-							<span className="text-lg">{game.pointsToWin}</span>
-							<PencilIcon className="h-4 w-4" />
-						</button>
-					</div>
+					<EditPointsToWinModal />
 				</div>
 				{[...game.scores.keys()]
 					.sort(
