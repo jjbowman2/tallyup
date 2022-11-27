@@ -11,7 +11,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 		<main
 			className={
 				jost.className +
-				" min-h-screen bg-gradient-to-b from-slate-100 to-white dark:from-slate-700 dark:to-gray-600"
+				" min-h-screen w-screen bg-gradient-to-b from-slate-100 to-white dark:from-slate-700 dark:to-gray-600"
 			}
 		>
 			<Header />
