@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div>
-				<section className="container mx-auto flex dark:text-white">
+				<section className="container mx-auto w-full dark:text-white">
 					<CurrentGame />
 				</section>
 			</div>
