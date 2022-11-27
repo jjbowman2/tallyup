@@ -3,9 +3,9 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import SuperJSON from "superjson";
 import { z } from "zod";
+import EditPlayerModal from "../edit-player-modal";
 
 export const GameTypeSchema = z.object({
 	pointsToWin: z.number(),
@@ -43,7 +43,6 @@ export const tryParseGame = (gameJson: string | null): GameType | null => {
 export default function CurrentGame() {
 	const [gameJson] = useAtom(gameAtom);
 	const router = useRouter();
-	const [selectedPlayer, setSelectedPlayer] = useState<Player>();
 
 	const game = tryParseGame(gameJson);
 	if (!game) {
@@ -51,7 +50,7 @@ export default function CurrentGame() {
 		return null;
 	}
 	const winningPlayer = [...game.scores.keys()].find(
-		(player) => game.scores.get(player)! >= game.pointsToWin
+		(player) => (game.scores.get(player) ?? 0) >= game.pointsToWin
 	);
 
 	return (
@@ -78,28 +77,13 @@ export default function CurrentGame() {
 							(game.scores.get(p1) ?? 0)
 					)
 					.map((player) => (
-						<button
+						<EditPlayerModal
 							key={player}
-							className="mb-2 flex w-full justify-between text-xl hover:text-gray-700"
-							onClick={() =>
-								setSelectedPlayer({
-									name: player,
-									score: game.scores.get(player) ?? 0,
-								})
-							}
-						>
-							<p>{player}</p>
-							<p
-								className={
-									(game.scores.get(player) ?? 0) >=
-									game.pointsToWin
-										? "text-green-500 dark:text-green-600"
-										: ""
-								}
-							>
-								{game.scores.get(player)}
-							</p>
-						</button>
+							player={{
+								name: player,
+								score: game.scores.get(player) ?? 0,
+							}}
+						/>
 					))}
 				{winningPlayer ? (
 					<div className="text-center text-2xl text-indigo-800 dark:text-indigo-300">
@@ -139,12 +123,6 @@ export default function CurrentGame() {
 					</Link>
 				</div>
 			</div>
-			{/* <EditPlayerModal
-				player={selectedPlayer}
-				isOpen={!!selectedPlayer}
-				onClose={() => setSelectedPlayer(undefined)}
-				onSubmit={() => {}}
-			/> */}
 		</>
 	);
 }
