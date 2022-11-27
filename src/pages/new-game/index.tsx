@@ -1,10 +1,8 @@
 import { type NextPage } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
-const CurrentGame = dynamic(() => import("../components/current-game"), {
-	ssr: false,
-});
-const Home: NextPage = () => {
+import NewGameForm from "../../components/new-game-form";
+
+const NewGamePage: NextPage = () => {
 	return (
 		<>
 			<Head>
@@ -13,12 +11,12 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div>
-				<section className="container mx-auto flex dark:text-white">
-					<CurrentGame />
+				<section className="container mx-auto px-2 py-4">
+					<NewGameForm />
 				</section>
 			</div>
 		</>
 	);
 };
 
-export default Home;
+export default NewGamePage;
