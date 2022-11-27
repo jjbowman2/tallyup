@@ -80,7 +80,7 @@ export default function CurrentGame() {
 					.map((player) => (
 						<button
 							key={player}
-							className="mb-2 flex w-full justify-between text-xl"
+							className="mb-2 flex w-full justify-between text-xl hover:text-gray-700"
 							onClick={() =>
 								setSelectedPlayer({
 									name: player,

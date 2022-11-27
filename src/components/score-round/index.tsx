@@ -122,7 +122,7 @@ export default function ScoreRound() {
 				})}
 				<div className="mt-8 flex w-full flex-col-reverse lg:flex-row lg:justify-end lg:gap-8">
 					<Link
-						className="my-3 block w-full rounded py-2 text-center text-xl text-indigo-800 hover:text-indigo-900 dark:text-indigo-400 dark:text-indigo-400 hover:dark:text-indigo-300 lg:w-fit lg:px-3"
+						className="my-3 block w-full rounded py-2 text-center text-xl text-indigo-800 hover:text-indigo-900 dark:text-indigo-400 hover:dark:text-indigo-300 lg:w-fit lg:px-3"
 						href="/"
 					>
 						Cancel

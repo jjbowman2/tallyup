@@ -1,17 +1,26 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useAtom } from "jotai";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import SuperJSON from "superjson";
 import type { GameType } from "../current-game";
-import { gameAtom } from "../current-game";
+import { gameAtom, tryParseGame } from "../current-game";
 
-export default function NewGameForm() {
+export default function EditPlayers() {
 	const router = useRouter();
-	const [, setGame] = useAtom(gameAtom);
-	const [players, setPlayers] = useState<string[]>([]);
-	const [pointsToWin, setPointsToWin] = useState(50);
+	const [gameJson, setGameJson] = useAtom(gameAtom);
 	const [currentPlayerInput, setCurrentPlayerInput] = useState("");
+	const game = tryParseGame(gameJson);
+	const [players, setPlayers] = useState<string[]>([
+		...(game?.scores?.keys() ?? []),
+	]);
+
+	if (!game) {
+		router.push("/welcome");
+		return null;
+	}
+
 	const addNewPlayer = () => {
 		// handle empty input error message, or duplicates
 		if (
@@ -22,40 +31,28 @@ export default function NewGameForm() {
 			setCurrentPlayerInput("");
 		}
 	};
-	const handleCreateNewGame = () => {
-		if (!pointsToWin || players.length == 0) {
+	const handleUpdatePlayers = () => {
+		if (players.length == 0) {
 			// handle errors
 			return;
 		}
-		const scores = new Map<string, number>();
-		players.forEach((player) => scores.set(player, 0));
-		const game: GameType = {
-			pointsToWin,
+		const scores = new Map();
+		players.forEach((player) =>
+			scores.set(player, game.scores.get(player) ?? 0)
+		);
+		const updatedGame: GameType = {
+			...game,
 			scores,
 		};
-		setGame(SuperJSON.stringify(game));
+		setGameJson(SuperJSON.stringify(updatedGame));
 		router.push("/");
 	};
+
 	return (
 		<div className="mx-auto max-w-lg">
 			<h2 className="text-3xl tracking-wider text-indigo-900 dark:text-indigo-300">
-				Setup a new game
+				Add/Remove Players
 			</h2>
-			<span className="mt-4 flex flex-col">
-				<label
-					htmlFor="numberOfPointsToWinInput"
-					className="dark:text-white"
-				>
-					How many points do you need to win?
-				</label>
-				<input
-					id="numberOfPointsToWinInput"
-					type="number"
-					className="rounded"
-					value={pointsToWin}
-					onChange={(e) => setPointsToWin(e.target.valueAsNumber)}
-				/>
-			</span>
 
 			<span className="my-4 flex flex-col">
 				<label htmlFor="currentPlayerInput" className="dark:text-white">
@@ -109,12 +106,20 @@ export default function NewGameForm() {
 					</button>
 				</span>
 			))}
-			<button
-				className="ml-auto block rounded bg-indigo-800 px-6 py-1 text-lg text-white hover:bg-indigo-900 dark:bg-indigo-400 dark:hover:bg-indigo-300"
-				onClick={handleCreateNewGame}
-			>
-				Start Game
-			</button>
+			<div className="mt-8 flex w-full flex-col-reverse lg:flex-row lg:justify-end lg:gap-8">
+				<Link
+					className="my-3 block w-full rounded py-2 text-center text-xl text-indigo-800 hover:text-indigo-900 dark:text-indigo-400 hover:dark:text-indigo-300 lg:w-fit lg:px-3"
+					href="/"
+				>
+					Cancel
+				</Link>
+				<button
+					className="my-3 w-full rounded bg-indigo-800 py-2 text-xl text-white hover:bg-indigo-900 dark:bg-indigo-400 hover:dark:bg-indigo-300 lg:w-fit lg:px-3"
+					onClick={handleUpdatePlayers}
+				>
+					Update Players
+				</button>
+			</div>
 		</div>
 	);
 }
