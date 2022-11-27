@@ -11,16 +11,19 @@ const WelcomePage: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div>
-				<section className="container mx-auto flex h-[calc(100vh-60.5px)] items-center dark:text-white">
-					<div className="mx-auto flex max-w-lg flex-col rounded p-4">
+				<section className="container mx-auto flex dark:text-white">
+					<div className="mx-auto max-w-lg rounded p-4">
 						<p className="text-2xl">
-							Welcome to <i>Tally Up</i>, the round based scoring
-							app: the easiest way to track who&apos;s kicking
-							whose butt!
+							Welcome to{" "}
+							<span className="bg-gradient-to-r from-indigo-800 to-fuchsia-500 bg-clip-text font-bold text-transparent dark:from-indigo-500 dark:to-fuchsia-500">
+								Tally Up
+							</span>
+							, the round based scoring app: the easiest way to
+							track who&apos;s kicking whose butt!
 						</p>
 						<Link
 							href="/new-game"
-							className="self-center rounded bg-indigo-800 px-6 py-1 text-lg text-white hover:bg-indigo-900 dark:bg-indigo-400 dark:hover:bg-indigo-300"
+							className="ml-auto mt-4 block w-fit rounded bg-indigo-800 px-6 py-1 text-lg text-white hover:bg-indigo-900 dark:bg-indigo-400 dark:hover:bg-indigo-300"
 						>
 							Get Started
 						</Link>
