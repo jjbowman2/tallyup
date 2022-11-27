@@ -52,6 +52,7 @@ export default function ScoreRound() {
 							<span className="flex gap-4">
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore - 10)
 									}
@@ -60,6 +61,7 @@ export default function ScoreRound() {
 								</button>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore - 5)
 									}
@@ -68,6 +70,7 @@ export default function ScoreRound() {
 								</button>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore - 1)
 									}
@@ -88,6 +91,7 @@ export default function ScoreRound() {
 								/>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore + 1)
 									}
@@ -96,6 +100,7 @@ export default function ScoreRound() {
 								</button>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore + 5)
 									}
@@ -104,6 +109,7 @@ export default function ScoreRound() {
 								</button>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
+									tabIndex={1}
 									onClick={() =>
 										updateScore(player, currentScore + 10)
 									}
