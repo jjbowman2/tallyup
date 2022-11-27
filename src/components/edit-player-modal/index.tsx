@@ -29,7 +29,7 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen}>
 			<Dialog.Trigger asChild>
-				<button className="mb-2 flex w-full justify-between text-xl hover:text-gray-700">
+				<button className="mb-2 flex w-full justify-between text-xl hover:text-gray-700 dark:hover:text-gray-300">
 					<p>{player.name}</p>
 					<p
 						className={
@@ -43,9 +43,9 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 				</button>
 			</Dialog.Trigger>
 			<Dialog.Portal>
-				<Dialog.Overlay className="fixed inset-0 bg-black/20" />
-				<Dialog.Content className="fixed top-[25%] left-[50%] max-h-[85vh] w-[90vw] max-w-md -translate-x-[50%] -translate-y-[50%] transform rounded bg-white p-6 shadow focus:outline-none">
-					<Dialog.Title className="tracking-wide text-indigo-800 dark:text-indigo-400">
+				<Dialog.Overlay className="fixed inset-0 bg-black/20 dark:bg-black/40" />
+				<Dialog.Content className="fixed top-[25%] left-[50%] max-h-[85vh] w-[90vw] max-w-md -translate-x-[50%] -translate-y-[50%] transform rounded bg-white p-6 shadow focus:outline-none dark:bg-slate-600">
+					<Dialog.Title className="tracking-wide text-indigo-800 dark:text-indigo-200">
 						Edit Player
 					</Dialog.Title>
 					<span className="mt-4 flex flex-col">
@@ -80,7 +80,7 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 					</span>
 					<div className="flex justify-end gap-4">
 						<Dialog.Close asChild>
-							<button className="my-3 w-fit rounded py-2 px-3 text-indigo-800 hover:text-indigo-900 dark:text-indigo-400 hover:dark:text-indigo-300">
+							<button className="my-3 w-fit rounded py-2 px-3 text-indigo-800 hover:text-indigo-900 dark:text-indigo-200 hover:dark:text-indigo-100">
 								Cancel
 							</button>
 						</Dialog.Close>
