@@ -9,14 +9,14 @@ import { gameAtom, tryParseGame } from "../current-game";
 export default function ScoreRound() {
 	const [gameJson, setGameJson] = useAtom(gameAtom);
 	const router = useRouter();
-	const [scores, setScores] = useState<Map<string, number>>(new Map());
+	const [scores, setScores] = useState<Map<string, string>>(new Map());
 	const game = tryParseGame(gameJson);
 	if (!game) {
 		router.push("/welcome");
 		return null;
 	}
 
-	const updateScore = (player: string, newScore: number) => {
+	const updateScore = (player: string, newScore: string) => {
 		setScores((prevScores) => {
 			const updatedScores = new Map(prevScores);
 			updatedScores.set(player, newScore);
@@ -28,7 +28,8 @@ export default function ScoreRound() {
 		const updatedGame: GameType = { ...game };
 		[...updatedGame.scores.keys()].forEach((player) => {
 			const currentScore = updatedGame.scores.get(player) ?? 0;
-			const newRoundScore = scores.get(player) ?? 0;
+			let newRoundScore = Number(scores.get(player));
+			if (Number.isNaN(newRoundScore)) newRoundScore = 0;
 			updatedGame.scores.set(player, currentScore + newRoundScore);
 		});
 		const updatedGameJson = SuperJSON.stringify(updatedGame);
@@ -43,7 +44,10 @@ export default function ScoreRound() {
 					Enter the scores for this round
 				</h2>
 				{[...game.scores.keys()].map((player) => {
-					const currentScore = scores.get(player) ?? 0;
+					const currentScoreInput = scores.get(player) ?? "0";
+					let currentScore = Number(currentScoreInput);
+					if (Number.isNaN(currentScore)) currentScore = 0;
+
 					return (
 						<span key={player} className="mx-auto mt-4">
 							<label htmlFor={`${player}ScoreInputField`}>
@@ -54,7 +58,10 @@ export default function ScoreRound() {
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore - 10)
+										updateScore(
+											player,
+											String(currentScore - 10)
+										)
 									}
 								>
 									-10
@@ -63,7 +70,10 @@ export default function ScoreRound() {
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore - 5)
+										updateScore(
+											player,
+											String(currentScore - 5)
+										)
 									}
 								>
 									-5
@@ -72,7 +82,10 @@ export default function ScoreRound() {
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore - 1)
+										updateScore(
+											player,
+											String(currentScore - 1)
+										)
 									}
 								>
 									-1
@@ -81,19 +94,19 @@ export default function ScoreRound() {
 									id={`${player}ScoreInputField`}
 									className="w-16 rounded text-center dark:text-gray-800"
 									type="number"
-									value={currentScore}
+									value={currentScoreInput}
 									onChange={(e) =>
-										updateScore(
-											player,
-											e.target.valueAsNumber
-										)
+										updateScore(player, e.target.value)
 									}
 								/>
 								<button
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore + 1)
+										updateScore(
+											player,
+											String(currentScore + 1)
+										)
 									}
 								>
 									+1
@@ -102,7 +115,10 @@ export default function ScoreRound() {
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore + 5)
+										updateScore(
+											player,
+											String(currentScore + 5)
+										)
 									}
 								>
 									+5
@@ -111,7 +127,10 @@ export default function ScoreRound() {
 									className="px-1 text-xl text-indigo-800 dark:text-indigo-400"
 									tabIndex={1}
 									onClick={() =>
-										updateScore(player, currentScore + 10)
+										updateScore(
+											player,
+											String(currentScore + 10)
+										)
 									}
 								>
 									+10

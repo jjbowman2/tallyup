@@ -13,7 +13,7 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 	const [gameJson, setGameJson] = useAtom(gameAtom);
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState(player.name);
-	const [score, setScore] = useState(player.score);
+	const [score, setScore] = useState(String(player.score));
 
 	const game = tryParseGame(gameJson);
 	if (!game) return null;
@@ -21,7 +21,9 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 	const handleUpdatePlayer = () => {
 		const updatedScore = new Map(game.scores);
 		updatedScore.delete(player.name);
-		updatedScore.set(name, score);
+		let parsedScore = Number(score);
+		if (isNaN(parsedScore)) parsedScore = 0;
+		updatedScore.set(name, parsedScore);
 		const updatedGame: GameType = { ...game, scores: updatedScore };
 		setGameJson(SuperJSON.stringify(updatedGame));
 		setOpen(false);
@@ -75,7 +77,7 @@ export default function EditPlayerModal({ player }: EditPlayerModalProps) {
 							type="number"
 							className="rounded"
 							value={score}
-							onChange={(e) => setScore(e.target.valueAsNumber)}
+							onChange={(e) => setScore(e.target.value)}
 						/>
 					</span>
 					<div className="flex justify-end gap-4">
