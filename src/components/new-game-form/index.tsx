@@ -23,12 +23,13 @@ export default function NewGameForm() {
 		}
 	};
 	const handleCreateNewGame = () => {
-		if (!pointsToWin || players.length == 0) {
+		const allPlayers = [...players, currentPlayerInput].filter(Boolean);
+		if (!pointsToWin || allPlayers.length == 0) {
 			// handle errors
 			return;
 		}
 		const scores = new Map<string, number>();
-		players.forEach((player) => scores.set(player, 0));
+		allPlayers.forEach((player) => scores.set(player, 0));
 		const game: GameType = {
 			pointsToWin,
 			scores,
@@ -77,7 +78,7 @@ export default function NewGameForm() {
 					<button
 						type="button"
 						onClick={addNewPlayer}
-						className="absolute right-4 top-0 bottom-0"
+						className="absolute bottom-0 right-4 top-0"
 					>
 						<PlusIcon className="h-8 w-8 text-indigo-800 hover:text-indigo-900 active:scale-95 dark:text-indigo-400 hover:dark:text-indigo-300" />
 					</button>
@@ -103,7 +104,7 @@ export default function NewGameForm() {
 						onClick={() =>
 							setPlayers(players.filter((_v, i) => index != i))
 						}
-						className="absolute right-4 top-0 bottom-0"
+						className="absolute bottom-0 right-4 top-0"
 					>
 						<XMarkIcon className="h-8 w-8 text-indigo-800 hover:text-indigo-900 active:scale-95 dark:text-indigo-400 hover:dark:text-indigo-300" />
 					</button>
