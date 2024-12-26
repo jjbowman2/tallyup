@@ -6,11 +6,14 @@ import SuperJSON from "superjson";
 import type { GameType } from "../current-game";
 import { gameAtom } from "../current-game";
 
+const LAST_POINTS_TO_WIN_KEY = "LAST_POINTS_TO_WIN";
 export default function NewGameForm() {
 	const router = useRouter();
 	const [, setGame] = useAtom(gameAtom);
 	const [players, setPlayers] = useState<string[]>([]);
-	const [pointsToWin, setPointsToWin] = useState(50);
+	const [pointsToWin, setPointsToWin] = useState(
+		Number(localStorage.getItem(LAST_POINTS_TO_WIN_KEY)) || 50
+	);
 	const [currentPlayerInput, setCurrentPlayerInput] = useState("");
 	const addNewPlayer = () => {
 		// handle empty input error message, or duplicates
@@ -21,6 +24,12 @@ export default function NewGameForm() {
 			setPlayers((players) => [...players, currentPlayerInput]);
 			setCurrentPlayerInput("");
 		}
+	};
+	const handlePointsToWinChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setPointsToWin(Number(e.target.value));
+		localStorage.setItem(LAST_POINTS_TO_WIN_KEY, e.target.value);
 	};
 	const handleCreateNewGame = () => {
 		const allPlayers = [...players, currentPlayerInput].filter(Boolean);
@@ -54,7 +63,7 @@ export default function NewGameForm() {
 					type="number"
 					className="rounded"
 					value={pointsToWin}
-					onChange={(e) => setPointsToWin(e.target.valueAsNumber)}
+					onChange={handlePointsToWinChange}
 				/>
 			</span>
 
