@@ -1,20 +1,29 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import SuperJSON from "superjson";
 import type { GameType } from "../current-game";
 import { gameAtom } from "../current-game";
 
 const LAST_POINTS_TO_WIN_KEY = "LAST_POINTS_TO_WIN";
+
 export default function NewGameForm() {
 	const router = useRouter();
 	const [, setGame] = useAtom(gameAtom);
 	const [players, setPlayers] = useState<string[]>([]);
-	const [pointsToWin, setPointsToWin] = useState(
-		Number(localStorage.getItem(LAST_POINTS_TO_WIN_KEY)) || 50
-	);
+	const [pointsToWin, setPointsToWin] = useState(50);
 	const [currentPlayerInput, setCurrentPlayerInput] = useState("");
+
+	const pointsInputRef = useCallback((element: HTMLInputElement | null) => {
+		if (element) {
+			const savedPoints = localStorage.getItem(LAST_POINTS_TO_WIN_KEY);
+			if (savedPoints) {
+				setPointsToWin(Number(savedPoints));
+			}
+		}
+	}, []);
+
 	const addNewPlayer = () => {
 		// handle empty input error message, or duplicates
 		if (
@@ -59,6 +68,7 @@ export default function NewGameForm() {
 					How many points do you need to win?
 				</label>
 				<input
+					ref={pointsInputRef}
 					id="numberOfPointsToWinInput"
 					type="number"
 					className="rounded"
