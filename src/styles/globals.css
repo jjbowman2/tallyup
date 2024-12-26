@@ -6,3 +6,9 @@ body, #__next {
     height: 100vh;
     height: 100svh;
 }
+
+@layer base {
+  :root {
+        --radius: 0.5rem;
+    }
+}
