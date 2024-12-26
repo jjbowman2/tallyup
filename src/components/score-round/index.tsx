@@ -49,11 +49,11 @@ export default function ScoreRound() {
 					if (Number.isNaN(currentScore)) currentScore = 0;
 
 					return (
-						<span key={player} className="mx-auto mt-4">
+						<span key={player} className="container mt-4">
 							<label htmlFor={`${player}ScoreInputField`}>
 								{player}
 							</label>
-							<span className="flex gap-4">
+							<span className="flex justify-between gap-0.5">
 								<ScoreButton
 									tabIndex={1}
 									onClick={() =>
