@@ -27,7 +27,7 @@ export default function ScoreRound() {
 	const handleSaveScores = () => {
 		const updatedGame: GameType = { ...game };
 		[...updatedGame.scores.keys()].forEach((player) => {
-			const currentScore = updatedGame.scores.get(player) ?? 0;
+			const currentScore = updatedGame.scores.get(player) || 0;
 			let newRoundScore = Number(scores.get(player));
 			if (Number.isNaN(newRoundScore)) newRoundScore = 0;
 			updatedGame.scores.set(player, currentScore + newRoundScore);
@@ -44,7 +44,7 @@ export default function ScoreRound() {
 					Enter the scores for this round
 				</h2>
 				{[...game.scores.keys()].map((player) => {
-					const currentScoreInput = scores.get(player) ?? "0";
+					const currentScoreInput = scores.get(player) ?? "";
 					let currentScore = Number(currentScoreInput);
 					if (Number.isNaN(currentScore)) currentScore = 0;
 
@@ -92,6 +92,7 @@ export default function ScoreRound() {
 									className="w-16 rounded text-center dark:text-gray-800"
 									type="number"
 									value={currentScoreInput}
+									placeholder="0"
 									onChange={(e) =>
 										updateScore(player, e.target.value)
 									}
